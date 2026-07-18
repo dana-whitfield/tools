@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Image Studio — Free Image Compressor & Resizer | Loomwood Digital</title>
+<meta name="description" content="Compress and resize images right in your browser. JPG, PNG, WebP. No uploads, nothing leaves your device, no signup. Free image optimizer for the web." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%96%BC%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<style>
+  :root {
+    --bg:#f4f5f8; --panel:#fff; --ink:#1a1d26; --muted:#6b7280; --line:#e4e7ee;
+    --accent:#5b8def; --accent-ink:#fff; --danger:#e05563; --ok:#3aa88b;
+    --radius:12px; --shadow:0 6px 24px rgba(20,24,40,.08);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#0f1117;--panel:#171a22;--ink:#f4f5f7;--muted:#9aa0ad;--line:#262b36;--shadow:0 6px 24px rgba(0,0,0,.35);}
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent);}
+  header.appbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;}
+  .brand .logo{font-size:22px;}
+  .brand small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;}
+  .appbar-actions{display:flex;gap:8px;align-items:center;}
+  button,.btn{font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px;padding:9px 14px;transition:transform .04s,border-color .15s;}
+  button:hover,.btn:hover{border-color:var(--accent);} button:active{transform:translateY(1px);}
+  button:disabled{opacity:.5;cursor:not-allowed;}
+  .btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  .btn-ghost{background:transparent;}
+  .pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;}
+  .pill-free{background:color-mix(in srgb,var(--muted) 18%,transparent);color:var(--muted);}
+  .pill-pro{background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);}
+
+  .wrap{max-width:980px;margin:0 auto;padding:22px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:18px;}
+
+  .drop{border:2px dashed var(--line);border-radius:var(--radius);padding:44px 20px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .15s,background .15s;}
+  .drop.hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent);}
+  .drop strong{color:var(--ink);}
+  .drop .big{font-size:34px;}
+
+  .controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:4px;}
+  @media (max-width:720px){.controls{grid-template-columns:1fr;}}
+  label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin:0 0 5px;}
+  input[type=range]{width:100%;}
+  select,input[type=number]{width:100%;font-family:var(--font);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;}
+  .rowline{display:flex;align-items:center;gap:8px;}
+  .qval{font-variant-numeric:tabular-nums;font-weight:700;}
+
+  table.results{width:100%;border-collapse:collapse;margin-top:10px;}
+  table.results th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 8px;border-bottom:2px solid var(--line);}
+  table.results td{padding:9px 8px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle;}
+  table.results td.num{text-align:right;font-variant-numeric:tabular-nums;}
+  .thumb{width:46px;height:46px;object-fit:cover;border-radius:6px;border:1px solid var(--line);}
+  .save{color:var(--ok);font-weight:700;}
+  .grow{color:var(--danger);font-weight:700;}
+  .fname{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
+  .bar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap;}
+  .muted{color:var(--muted);font-size:13px;}
+  .lock-note{font-size:12px;color:var(--muted);margin-top:8px;}
+  dialog{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink);box-shadow:var(--shadow);max-width:440px;padding:0;}
+  dialog::backdrop{background:rgba(10,12,20,.55);}
+  dialog .body{padding:22px;} dialog h3{margin:0 0 8px;} dialog p{color:var(--muted);font-size:14px;margin:0 0 14px;}
+  dialog input[type=text]{width:100%;font-size:14px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:var(--ink);}
+  .toollink{font-size:13px;}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <div class="brand"><span class="logo">🖼️</span><div>Image Studio <small>by Loomwood Digital</small></div></div>
+  <div class="appbar-actions">
+    <a class="toollink" href="../invoice-studio/">Invoice Studio →</a>
+    <span id="tier-pill" class="pill pill-free">Free</span>
+    <button id="unlock-btn" class="btn-ghost">Unlock Pro</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <div id="drop" class="drop">
+      <div class="big">🖼️</div>
+      <div><strong>Drop images here</strong> or click to choose</div>
+      <div class="muted" id="freeLimitNote">JPG, PNG, or WebP · up to 5 images at a time on the free tier</div>
+      <input id="fileInput" type="file" accept="image/*" multiple hidden />
+    </div>
+
+    <div class="controls">
+      <div>
+        <label>Quality <span class="qval" id="qLabel">80%</span></label>
+        <input id="quality" type="range" min="30" max="100" value="80" />
+      </div>
+      <div>
+        <label>Max width (px, 0 = keep)</label>
+        <input id="maxW" type="number" min="0" step="10" value="0" />
+      </div>
+      <div>
+        <label>Output format</label>
+        <select id="format">
+          <option value="image/jpeg">JPG (smallest)</option>
+          <option value="image/webp">WebP</option>
+          <option value="image/png">PNG (lossless)</option>
+        </select>
+      </div>
+    </div>
+    <div class="lock-note" id="proNote">Free tier: up to 5 images per batch. <a href="#" id="unlockLink">Unlock Pro</a> for unlimited batches and a one-click "download all as ZIP" isn't needed — Pro simply removes the 5-image cap.</div>
+  </div>
+
+  <div class="card" id="resultsCard" style="display:none">
+    <div class="bar">
+      <div class="muted" id="summary"></div>
+      <button class="btn-primary" id="downloadAll">Download all</button>
+    </div>
+    <table class="results">
+      <thead><tr><th></th><th>File</th><th class="num">Original</th><th class="num">Optimized</th><th class="num">Saved</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <p class="muted">100% private — images are processed entirely in your browser using the Canvas API. Nothing is ever uploaded. Great for shrinking photos before emailing, posting, or listing them online.</p>
+</div>
+
+<dialog id="unlockDialog">
+  <div class="body">
+    <h3>Unlock Image Studio Pro</h3>
+    <p>Removes the 5-image-per-batch cap so you can optimize as many images at once as you like. Don't have a code?</p>
+    <input id="unlockCode" type="text" placeholder="Your unlock code" />
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn-primary" id="applyCode">Unlock</button>
+      <button class="btn-ghost" id="getCode">Get a code →</button>
+      <button class="btn-ghost" id="closeDialog">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  var UNLOCK_CODE="LOOMWOOD-IMAGE-PRO";
+  var STORE_URL="https://payhip.com/LoomwoodDigital";
+  var LS="loomwood.imageStudio.v1";
+  var FREE_BATCH=5;
+  var $=function(id){return document.getElementById(id);};
+  var state={pro:false, items:[]};
+
+  function fmtBytes(b){ if(b<1024)return b+" B"; if(b<1048576)return (b/1024).toFixed(1)+" KB"; return (b/1048576).toFixed(2)+" MB"; }
+
+  function loadPro(){ try{state.pro=JSON.parse(localStorage.getItem(LS)||"{}").pro||false;}catch(e){} }
+  function savePro(){ try{localStorage.setItem(LS,JSON.stringify({pro:state.pro}));}catch(e){} }
+
+  function applyTier(){
+    $("tier-pill").textContent=state.pro?"Pro":"Free";
+    $("tier-pill").className="pill "+(state.pro?"pill-pro":"pill-free");
+    $("unlock-btn").style.display=state.pro?"none":"inline-block";
+    $("freeLimitNote").textContent=state.pro?"JPG, PNG, or WebP · unlimited images (Pro)":"JPG, PNG, or WebP · up to "+FREE_BATCH+" images at a time on the free tier";
+    $("proNote").style.display=state.pro?"none":"block";
+  }
+
+  function loadImage(file){
+    return new Promise(function(res,rej){
+      var img=new Image(); var url=URL.createObjectURL(file);
+      img.onload=function(){ URL.revokeObjectURL(url); res(img); };
+      img.onerror=function(){ URL.revokeObjectURL(url); rej(new Error("bad image")); };
+      img.src=url;
+    });
+  }
+
+  function processOne(file){
+    return loadImage(file).then(function(img){
+      var maxW=parseInt($("maxW").value,10)||0;
+      var scale=(maxW>0 && img.width>maxW)? maxW/img.width : 1;
+      var w=Math.max(1,Math.round(img.width*scale)), h=Math.max(1,Math.round(img.height*scale));
+      var canvas=document.createElement("canvas"); canvas.width=w; canvas.height=h;
+      var ctx=canvas.getContext("2d"); ctx.drawImage(img,0,0,w,h);
+      var fmt=$("format").value;
+      var q=(parseInt($("quality").value,10)||80)/100;
+      return new Promise(function(res){
+        canvas.toBlob(function(blob){
+          var base=(file.name.replace(/\.[^.]+$/,"")||"image");
+          var ext=fmt==="image/png"?"png":(fmt==="image/webp"?"webp":"jpg");
+          res({ name:base+"-optimized."+ext, blob:blob, origSize:file.size,
+                thumb:canvas.toDataURL("image/jpeg",0.6), w:w, h:h });
+        }, fmt, q);
+      });
+    });
+  }
+
+  function addFiles(fileList){
+    var files=Array.prototype.slice.call(fileList).filter(function(f){return /^image\//.test(f.type);});
+    if(!files.length) return;
+    if(!state.pro){
+      var remaining=FREE_BATCH-state.items.length;
+      if(remaining<=0){ alert("Free tier is limited to "+FREE_BATCH+" images per batch. Unlock Pro to remove the cap."); return; }
+      if(files.length>remaining){ files=files.slice(0,remaining); alert("Free tier caps at "+FREE_BATCH+" images per batch; taking the first "+remaining+"."); }
+    }
+    $("resultsCard").style.display="block";
+    files.forEach(function(f){
+      var item={ id:Math.random().toString(36).slice(2), file:f, status:"working" };
+      state.items.push(item); renderRow(item);
+      processOne(f).then(function(out){ item.out=out; item.status="done"; renderRow(item); updateSummary(); })
+                   .catch(function(){ item.status="error"; renderRow(item); });
+    });
+  }
+
+  function renderRow(item){
+    var tr=document.getElementById("row-"+item.id);
+    if(!tr){ tr=document.createElement("tr"); tr.id="row-"+item.id; $("rows").appendChild(tr); }
+    if(item.status==="working"){ tr.innerHTML="<td colspan=6 class='muted'>Optimizing "+escapeHtml(item.file.name)+"…</td>"; return; }
+    if(item.status==="error"){ tr.innerHTML="<td colspan=6 class='grow'>Couldn't process "+escapeHtml(item.file.name)+"</td>"; return; }
+    var o=item.out;
+    var saved=item.file.size - o.blob.size;
+    var pct=item.file.size>0 ? Math.round(saved/item.file.size*100) : 0;
+    var savedCls=saved>=0?"save":"grow";
+    var savedTxt=(saved>=0?"−":"+")+Math.abs(pct)+"%";
+    tr.innerHTML=
+      "<td><img class='thumb' src='"+o.thumb+"' alt=''></td>"+
+      "<td><span class='fname' title='"+escapeHtml(o.name)+"'>"+escapeHtml(o.name)+"</span><div class='muted'>"+o.w+"×"+o.h+"</div></td>"+
+      "<td class='num'>"+fmtBytes(item.file.size)+"</td>"+
+      "<td class='num'>"+fmtBytes(o.blob.size)+"</td>"+
+      "<td class='num "+savedCls+"'>"+savedTxt+"</td>"+
+      "<td class='num'><button class='btn-ghost dl'>Download</button></td>";
+    tr.querySelector(".dl").addEventListener("click",function(){ downloadBlob(o.blob,o.name); });
+  }
+
+  function updateSummary(){
+    var done=state.items.filter(function(i){return i.status==="done";});
+    var orig=done.reduce(function(a,i){return a+i.file.size;},0);
+    var opt=done.reduce(function(a,i){return a+i.out.blob.size;},0);
+    var pct=orig>0?Math.round((orig-opt)/orig*100):0;
+    $("summary").textContent=done.length+" image"+(done.length===1?"":"s")+" · "+fmtBytes(orig)+" → "+fmtBytes(opt)+" ("+(pct>=0?"saved "+pct+"%":"grew "+Math.abs(pct)+"%")+")";
+  }
+
+  function downloadBlob(blob,name){
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },1000);
+  }
+
+  function escapeHtml(s){ var d=document.createElement("div"); d.textContent=s==null?"":s; return d.innerHTML; }
+
+  // ---- events ----
+  $("quality").addEventListener("input",function(){ $("qLabel").textContent=$("quality").value+"%"; });
+  var drop=$("drop");
+  drop.addEventListener("click",function(){ $("fileInput").click(); });
+  $("fileInput").addEventListener("change",function(e){ addFiles(e.target.files); e.target.value=""; });
+  ["dragenter","dragover"].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add("hover"); }); });
+  ["dragleave","drop"].forEach(function(ev){ drop.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove("hover"); }); });
+  drop.addEventListener("drop",function(e){ if(e.dataTransfer&&e.dataTransfer.files) addFiles(e.dataTransfer.files); });
+
+  $("downloadAll").addEventListener("click",function(){
+    var done=state.items.filter(function(i){return i.status==="done";});
+    if(!done.length) return;
+    done.forEach(function(i,idx){ setTimeout(function(){ downloadBlob(i.out.blob,i.out.name); }, idx*250); });
+  });
+
+  function openDialog(){ $("unlockDialog").showModal(); }
+  $("unlock-btn").addEventListener("click",openDialog);
+  $("unlockLink").addEventListener("click",function(e){ e.preventDefault(); openDialog(); });
+  $("closeDialog").addEventListener("click",function(){ $("unlockDialog").close(); });
+  $("getCode").addEventListener("click",function(){ window.open(STORE_URL,"_blank"); });
+  $("applyCode").addEventListener("click",function(){
+    var code=($("unlockCode").value||"").trim();
+    if(code.toUpperCase()===UNLOCK_CODE){ state.pro=true; applyTier(); savePro(); $("unlockDialog").close(); alert("Pro unlocked — the batch cap is removed. Thank you!"); }
+    else{ alert("That code didn't match. You can get a valid one from the store."); window.open(STORE_URL,"_blank"); }
+  });
+
+  loadPro(); applyTier();
+})();
+</script>
+</body>
+</html>
