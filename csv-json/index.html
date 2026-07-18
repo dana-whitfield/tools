@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CSV ⇄ JSON Converter — Free & Private | Loomwood Digital</title>
+<meta name="description" content="Convert CSV to JSON and JSON to CSV in your browser. Handles quoted fields and embedded commas. No uploads, no signup, nothing leaves your device." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%84%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{--bg:#f4f5f8;--panel:#fff;--ink:#1a1d26;--muted:#6b7280;--line:#e4e7ee;--accent:#5b8def;--accent-ink:#fff;--ok:#3aa88b;--danger:#e05563;--radius:12px;--shadow:0 6px 24px rgba(20,24,40,.08);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+  @media (prefers-color-scheme:dark){:root{--bg:#0f1117;--panel:#171a22;--ink:#f4f5f7;--muted:#9aa0ad;--line:#262b36;--shadow:0 6px 24px rgba(0,0,0,.35);}}
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent);}
+  header.appbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;}
+  .brand .logo{font-size:22px;}.brand small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;}
+  .appbar-actions{display:flex;gap:8px;align-items:center;}.toollink{font-size:13px;}
+  button,.btn{font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:9px;padding:9px 14px;transition:transform .04s,border-color .15s;}
+  button:hover,.btn:hover{border-color:var(--accent);}button:active{transform:translateY(1px);}button:disabled{opacity:.5;cursor:not-allowed;}
+  .btn-primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+  .btn-ghost{background:transparent;}
+  .pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;}
+  .pill-free{background:color-mix(in srgb,var(--muted) 18%,transparent);color:var(--muted);}
+  .pill-pro{background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent);}
+  .wrap{max-width:1200px;margin:0 auto;padding:22px;}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;}
+  .seg button{border:none;border-radius:0;background:var(--panel);}
+  .seg button.sel{background:var(--accent);color:var(--accent-ink);}
+  select,input[type=text]{font-family:var(--font);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
+  .panes{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:820px){.panes{grid-template-columns:1fr;}}
+  .pane{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;}
+  .pane h2{margin:0;padding:12px 16px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+  textarea{width:100%;min-height:340px;border:none;resize:vertical;padding:14px 16px;font-family:var(--mono);font-size:13px;line-height:1.55;color:var(--ink);background:var(--panel);}
+  textarea:focus{outline:none;}
+  .out-actions{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap;align-items:center;}
+  .status{font-size:13px;color:var(--muted);}
+  .status.err{color:var(--danger);font-weight:600;}
+  .status.ok{color:var(--ok);}
+  .copied{color:var(--ok);font-weight:700;font-size:13px;}
+  .muted{color:var(--muted);font-size:13px;}
+  label.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer;}
+  dialog{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ink);box-shadow:var(--shadow);max-width:440px;padding:0;}
+  dialog::backdrop{background:rgba(10,12,20,.55);}dialog .body{padding:22px;}dialog h3{margin:0 0 8px;}dialog p{color:var(--muted);font-size:14px;margin:0 0 14px;}
+  dialog input{width:100%;}.field{margin-bottom:12px;}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <div class="brand"><span class="logo">🔄</span><div>CSV ⇄ JSON <small>by Loomwood Digital</small></div></div>
+  <div class="appbar-actions">
+    <a class="toollink" href="../">All tools</a>
+    <span id="tier-pill" class="pill pill-free">Free</span>
+    <button id="unlock-btn" class="btn-ghost">Unlock Pro</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="seg" id="dirSeg">
+      <button data-dir="c2j" class="sel">CSV → JSON</button>
+      <button data-dir="j2c">JSON → CSV</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="pretty" checked /> Pretty output</label>
+    <span id="delimWrap">Delimiter <select id="delim"><option value=",">, comma</option><option value=";">; semicolon</option><option value="\t">tab</option><option value="|">| pipe</option></select> <span class="pill pill-pro">Pro</span></span>
+    <button class="btn-ghost" id="sampleBtn">Load sample</button>
+  </div>
+
+  <div class="panes">
+    <div class="pane">
+      <h2><span id="inLabel">CSV input</span></h2>
+      <textarea id="input" placeholder="Paste your CSV here…" spellcheck="false"></textarea>
+    </div>
+    <div class="pane">
+      <h2>Output <span class="status" id="status"></span></h2>
+      <textarea id="output" readonly placeholder="Result appears here…" spellcheck="false"></textarea>
+      <div class="out-actions">
+        <button class="btn-primary" id="copyBtn">Copy</button>
+        <button class="btn-ghost" id="downloadBtn">Download <span class="pill pill-pro">Pro</span></button>
+        <span id="copied" class="copied" style="display:none">Copied!</span>
+      </div>
+    </div>
+  </div>
+  <p class="muted" style="margin-top:14px">100% private — conversion happens in your browser, nothing is uploaded. The parser handles quoted fields, embedded commas, and escaped quotes. Free tier converts up to 100 rows; <a href="#" id="unlockLink">Pro</a> removes the cap and adds custom delimiters + file download.</p>
+</div>
+
+<dialog id="unlockDialog">
+  <div class="body">
+    <h3>Unlock CSV ⇄ JSON Pro</h3>
+    <p>Pro removes the 100-row cap, adds custom delimiters (semicolon, tab, pipe), and lets you download the result as a file. Don't have a code?</p>
+    <div class="field"><input id="unlockCode" type="text" placeholder="Your unlock code" /></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn-primary" id="applyCode">Unlock</button>
+      <button class="btn-ghost" id="getCode">Get a code →</button>
+      <button class="btn-ghost" id="closeDialog">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  var UNLOCK_CODE="LOOMWOOD-CSVJSON-PRO";
+  var STORE_URL="https://payhip.com/LoomwoodDigital";
+  var LS="loomwood.csvjson.v1";
+  var FREE_ROWS=100;
+  var $=function(id){return document.getElementById(id);};
+  var state={pro:false, dir:"c2j"};
+
+  // ---- robust CSV parse (RFC-4180-ish) ----
+  function parseCSV(text, delim){
+    var rows=[], row=[], field="", i=0, inQ=false, c;
+    text=text.replace(/\r\n/g,"\n").replace(/\r/g,"\n");
+    while(i<text.length){
+      c=text[i];
+      if(inQ){
+        if(c==='"'){ if(text[i+1]==='"'){ field+='"'; i+=2; continue; } inQ=false; i++; continue; }
+        field+=c; i++; continue;
+      }
+      if(c==='"'){ inQ=true; i++; continue; }
+      if(c===delim){ row.push(field); field=""; i++; continue; }
+      if(c==="\n"){ row.push(field); rows.push(row); row=[]; field=""; i++; continue; }
+      field+=c; i++;
+    }
+    row.push(field); rows.push(row);
+    // drop a single trailing empty row (trailing newline)
+    if(rows.length && rows[rows.length-1].length===1 && rows[rows.length-1][0]===""){ rows.pop(); }
+    return rows;
+  }
+
+  function csvToJson(text, delim){
+    var rows=parseCSV(text, delim);
+    if(!rows.length) return [];
+    var headers=rows[0].map(function(h){return h.trim();});
+    return rows.slice(1).map(function(r){
+      var o={};
+      headers.forEach(function(h,idx){ o[h]=coerce(r[idx]!==undefined?r[idx]:""); });
+      return o;
+    });
+  }
+  function coerce(s){
+    if(s==="") return "";
+    if(s==="true") return true; if(s==="false") return false; if(s==="null") return null;
+    if(/^-?\d+(\.\d+)?$/.test(s) && s.length<16){ var n=Number(s); if(!isNaN(n)) return n; }
+    return s;
+  }
+
+  function jsonToCsv(text, delim){
+    var data=JSON.parse(text);
+    if(!Array.isArray(data)) data=[data];
+    if(!data.length) return "";
+    var headers=[];
+    data.forEach(function(o){ Object.keys(o||{}).forEach(function(k){ if(headers.indexOf(k)<0) headers.push(k); }); });
+    var lines=[headers.map(cell).join(delim)];
+    data.forEach(function(o){ lines.push(headers.map(function(h){ var v=o?o[h]:""; return cell(v==null?"":(typeof v==="object"?JSON.stringify(v):v)); }).join(delim)); });
+    return lines.join("\r\n");
+    function cell(v){ v=String(v); var needs=v.indexOf('"')>=0||v.indexOf(delim)>=0||v.indexOf("\n")>=0||v.indexOf("\r")>=0; return needs?'"'+v.replace(/"/g,'""')+'"':v; }
+  }
+
+  function curDelim(){ var d=state.pro?$("delim").value:","; return d==="\\t"?"\t":d; }
+
+  function convert(){
+    var inp=$("input").value;
+    var st=$("status"); st.className="status";
+    if(!inp.trim()){ $("output").value=""; st.textContent=""; return; }
+    try{
+      if(state.dir==="c2j"){
+        var arr=csvToJson(inp, curDelim());
+        if(!state.pro && arr.length>FREE_ROWS){ arr=arr.slice(0,FREE_ROWS); st.textContent="Free tier: showing first "+FREE_ROWS+" rows"; st.className="status err"; }
+        else { st.textContent=arr.length+" row"+(arr.length===1?"":"s"); st.className="status ok"; }
+        $("output").value=JSON.stringify(arr, null, $("pretty").checked?2:0);
+      } else {
+        var data=JSON.parse(inp);
+        var n=Array.isArray(data)?data.length:1;
+        if(!state.pro && n>FREE_ROWS){ data=data.slice(0,FREE_ROWS); n=FREE_ROWS; st.textContent="Free tier: first "+FREE_ROWS+" rows"; st.className="status err"; }
+        else { st.textContent=n+" row"+(n===1?"":"s"); st.className="status ok"; }
+        $("output").value=jsonToCsv(JSON.stringify(data), curDelim());
+      }
+    }catch(e){ $("output").value=""; st.textContent=(state.dir==="j2c"?"Invalid JSON: ":"Error: ")+e.message; st.className="status err"; }
+  }
+
+  function setDir(dir){
+    state.dir=dir;
+    document.querySelectorAll("#dirSeg button").forEach(function(b){ b.classList.toggle("sel",b.dataset.dir===dir); });
+    $("inLabel").textContent=dir==="c2j"?"CSV input":"JSON input";
+    $("input").placeholder=dir==="c2j"?"Paste your CSV here…":"Paste your JSON array here…";
+    convert(); save();
+  }
+
+  function applyTier(){
+    $("tier-pill").textContent=state.pro?"Pro":"Free";
+    $("tier-pill").className="pill "+(state.pro?"pill-pro":"pill-free");
+    $("unlock-btn").style.display=state.pro?"none":"inline-block";
+    $("delim").disabled=!state.pro;
+    convert();
+  }
+
+  function save(){ try{ localStorage.setItem(LS,JSON.stringify({pro:state.pro,dir:state.dir})); }catch(e){} }
+  function load(){ try{ var r=JSON.parse(localStorage.getItem(LS)||"{}"); state.pro=!!r.pro; state.dir=r.dir||"c2j"; }catch(e){} }
+
+  $("input").addEventListener("input",convert);
+  $("pretty").addEventListener("change",convert);
+  $("delim").addEventListener("change",convert);
+  document.querySelectorAll("#dirSeg button").forEach(function(b){ b.addEventListener("click",function(){ setDir(b.dataset.dir); }); });
+
+  $("sampleBtn").addEventListener("click",function(){
+    if(state.dir==="c2j"){ $("input").value='name,role,active,rate\nDana Whitfield,Designer,true,120\n"Lee, Jordan",Developer,false,95\nSam Rivera,"Copy, editing",true,80'; }
+    else { $("input").value='[\n  {"name":"Dana Whitfield","role":"Designer","active":true,"rate":120},\n  {"name":"Lee, Jordan","role":"Developer","active":false,"rate":95}\n]'; }
+    convert();
+  });
+
+  $("copyBtn").addEventListener("click",function(){ if(!$("output").value) return; navigator.clipboard.writeText($("output").value).then(function(){ var c=$("copied"); c.style.display="inline"; setTimeout(function(){c.style.display="none";},1500); }); });
+  $("downloadBtn").addEventListener("click",function(){
+    if(!state.pro){ openDialog(); return; }
+    var out=$("output").value; if(!out) return;
+    var isJson=state.dir==="c2j";
+    var blob=new Blob([out],{type:isJson?"application/json":"text/csv"}); var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download=isJson?"data.json":"data.csv"; document.body.appendChild(a); a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000);
+  });
+
+  function openDialog(){ $("unlockDialog").showModal(); }
+  $("unlock-btn").addEventListener("click",openDialog);
+  $("unlockLink").addEventListener("click",function(e){ e.preventDefault(); openDialog(); });
+  $("closeDialog").addEventListener("click",function(){ $("unlockDialog").close(); });
+  $("getCode").addEventListener("click",function(){ window.open(STORE_URL,"_blank"); });
+  $("applyCode").addEventListener("click",function(){
+    var code=($("unlockCode").value||"").trim();
+    if(code.toUpperCase()===UNLOCK_CODE){ state.pro=true; applyTier(); save(); $("unlockDialog").close(); alert("Pro unlocked — row cap removed, custom delimiters and download enabled. Thank you!"); }
+    else { alert("That code didn't match. You can get a valid one from the store."); window.open(STORE_URL,"_blank"); }
+  });
+
+  load(); setDir(state.dir); applyTier();
+})();
+</script>
+</body>
+</html>
