@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Convert CSV to JSON Online — Without Uploading Your Data</title>
+<meta name="description" content="Convert CSV to JSON (and JSON back to CSV) entirely in your browser. Handles quoted fields and embedded commas. Free, no signup, and your data never leaves your device." />
+<link rel="canonical" href="https://dana-whitfield.github.io/tools/guides/convert-csv-to-json-online/" />
+<meta property="og:title" content="Convert CSV to JSON — Without Uploading Your Data" />
+<meta property="og:description" content="A free CSV ⇄ JSON converter that runs entirely in your browser. No signup, nothing uploaded." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dana-whitfield.github.io/tools/guides/convert-csv-to-json-online/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%84%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{--bg:#f4f5f8;--panel:#fff;--ink:#1a1d26;--muted:#6b7280;--line:#e4e7ee;--accent:#5b8def;--radius:14px;--shadow:0 6px 24px rgba(20,24,40,.08);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  @media (prefers-color-scheme:dark){:root{--bg:#0f1117;--panel:#171a22;--ink:#f4f5f7;--muted:#9aa0ad;--line:#262b36;--shadow:0 6px 24px rgba(0,0,0,.35);}}
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 22px 64px;}
+  nav.crumbs{font-size:14px;margin-bottom:26px;color:var(--muted);}
+  nav.crumbs a{font-weight:600;}
+  h1{font-size:32px;letter-spacing:-.02em;line-height:1.2;margin:0 0 10px;}
+  .meta{color:var(--muted);font-size:14px;margin:0 0 26px;}
+  h2{font-size:22px;letter-spacing:-.01em;margin:34px 0 10px;}
+  p,li{font-size:16px;color:var(--ink);}
+  ul,ol{padding-left:22px;}li{margin:6px 0;}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1px 6px;}
+  pre{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font-size:13.5px;line-height:1.5;}
+  pre code{border:0;background:none;padding:0;}
+  .cta{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin:30px 0;}
+  .cta h3{margin:0 0 6px;font-size:18px;}
+  .cta p{margin:0 0 14px;color:var(--muted);font-size:15px;}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;}
+  .btn:hover{text-decoration:none;opacity:.92;}
+  .faq h3{font-size:17px;margin:20px 0 6px;}
+  .faq p{color:var(--muted);margin:0 0 4px;}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Is my data uploaded when I convert CSV to JSON?","acceptedAnswer":{"@type":"Answer","text":"Not with a client-side converter. This tool parses and converts entirely in your browser using JavaScript — your file never leaves your device, which matters when the CSV contains customer lists, financials, or exports from internal systems."}},
+{"@type":"Question","name":"How are commas inside values handled?","acceptedAnswer":{"@type":"Answer","text":"Proper CSV wraps such values in double quotes (\"Austin, TX\"), and quotes inside values are doubled (\"\"). The converter implements real RFC-4180-style quoting rules rather than naively splitting on commas."}},
+{"@type":"Question","name":"Can I convert JSON back to CSV?","acceptedAnswer":{"@type":"Answer","text":"Yes — paste an array of JSON objects and the tool flattens it back into CSV with a header row built from the keys."}},
+{"@type":"Question","name":"Is there a size limit?","acceptedAnswer":{"@type":"Answer","text":"The free tier converts up to 100 rows at a time. A one-time Pro unlock removes the cap and adds custom delimiters and file download."}}
+]}
+</script>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumbs"><a href="../../">🛠️ Loomwood Tools</a> <span>› Guides › CSV to JSON</span></nav>
+<article>
+<h1>How to Convert CSV to JSON — Without Uploading Your Data</h1>
+<p class="meta">Updated July 2026 · by Loomwood Digital</p>
+
+<p>CSV is what spreadsheets and exports speak; JSON is what APIs, config files, and JavaScript speak. Sooner or later you need to turn one into the other — a product list for a web page, a spreadsheet export for an API call, a database dump you want to inspect as objects.</p>
+
+<p>The catch with most online converters: you paste (or upload) your data into someone else's server. If that CSV is a customer list or a financial export, that's a real problem. <a href="../../csv-json/">Loomwood's CSV ⇄ JSON Converter</a> does the conversion entirely in your browser — <strong>nothing is uploaded</strong> — and it handles the tricky cases (quoted fields, embedded commas, newlines in values) that naive converters get wrong.</p>
+
+<div class="cta">
+  <h3>Convert CSV ⇄ JSON privately</h3>
+  <p>Paste either format, get the other back instantly. Free, no signup, fully client-side.</p>
+  <a class="btn" href="../../csv-json/">Open the Converter →</a>
+</div>
+
+<h2>What the conversion looks like</h2>
+<p>This CSV:</p>
+<pre><code>name,city,plan
+Ada,"Austin, TX",pro
+Grace,London,free</code></pre>
+<p>becomes this JSON:</p>
+<pre><code>[
+  { "name": "Ada",   "city": "Austin, TX", "plan": "pro" },
+  { "name": "Grace", "city": "London",     "plan": "free" }
+]</code></pre>
+<p>Note the second field of the first row: <code>"Austin, TX"</code> contains a comma, so it's wrapped in quotes in CSV. A converter that just splits lines on commas would break that row into four columns — this is the single most common way CSV conversions silently corrupt data.</p>
+
+<h2>Why quoting rules matter</h2>
+<ul>
+  <li><strong>Embedded commas</strong> — <code>"Austin, TX"</code> must stay one value.</li>
+  <li><strong>Embedded quotes</strong> — CSV escapes a quote by doubling it: <code>"She said ""hi"""</code>.</li>
+  <li><strong>Embedded newlines</strong> — a quoted value can span lines; splitting the file on newlines first mangles it.</li>
+</ul>
+<p>These rules (RFC 4180) are exactly what spreadsheet apps emit when you export, so a converter must speak them to round-trip real-world files.</p>
+
+<h2>Common uses</h2>
+<ul>
+  <li><strong>Spreadsheet → API:</strong> export a sheet as CSV, convert, and you have the JSON payload your endpoint expects.</li>
+  <li><strong>API → spreadsheet:</strong> paste a JSON response, convert to CSV, open in Excel or Google Sheets for the non-developers on your team.</li>
+  <li><strong>Quick inspection:</strong> JSON's structure makes a messy export readable; CSV makes a JSON dump sortable and filterable.</li>
+</ul>
+
+<h2 class="faq-h">Frequently asked questions</h2>
+<div class="faq">
+  <h3>Is my data uploaded anywhere?</h3>
+  <p>No — parsing and conversion happen in your browser. There's no server involved at all.</p>
+  <h3>Does it go both directions?</h3>
+  <p>Yes: CSV → JSON and JSON → CSV (an array of objects becomes rows with a header built from the keys).</p>
+  <h3>What's free and what's Pro?</h3>
+  <p>Free converts up to 100 rows at a time. A one-time $5 Pro code removes the cap and adds custom delimiters (semicolon, tab, pipe) and one-click file download.</p>
+  <h3>What about Excel files (.xlsx)?</h3>
+  <p>Save/export the sheet as CSV first (File → Save As → CSV in Excel; File → Download → CSV in Google Sheets), then convert.</p>
+</div>
+
+<div class="cta">
+  <h3>Convert your data now</h3>
+  <p>Free, accurate, and your data stays yours.</p>
+  <a class="btn" href="../../csv-json/">Open the CSV ⇄ JSON Converter →</a>
+</div>
+</article>
+
+<footer>
+More free, private browser tools by Loomwood: <a href="../../invoice-studio/">Invoice generator</a> · <a href="../../image-studio/">Image compressor</a> · <a href="../../signature-studio/">Email signature generator</a> · <a href="../../utm-builder/">UTM link builder</a> · <a href="../../">All tools</a>
+</footer>
+</div>
+</body>
+</html>
