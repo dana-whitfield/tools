@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UTM Parameters Explained — With a Free UTM Link Builder</title>
+<meta name="description" content="What utm_source, utm_medium, and utm_campaign actually mean, how to name them consistently, and a free UTM link builder that runs in your browser with no signup." />
+<link rel="canonical" href="https://dana-whitfield.github.io/tools/guides/utm-parameters-explained/" />
+<meta property="og:title" content="UTM Parameters Explained (With a Free UTM Builder)" />
+<meta property="og:description" content="What utm_source, utm_medium, and utm_campaign mean, naming rules that keep your analytics clean, and a free browser-based UTM builder." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://dana-whitfield.github.io/tools/guides/utm-parameters-explained/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%97%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{--bg:#f4f5f8;--panel:#fff;--ink:#1a1d26;--muted:#6b7280;--line:#e4e7ee;--accent:#5b8def;--radius:14px;--shadow:0 6px 24px rgba(20,24,40,.08);--font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  @media (prefers-color-scheme:dark){:root{--bg:#0f1117;--panel:#171a22;--ink:#f4f5f7;--muted:#9aa0ad;--line:#262b36;--shadow:0 6px 24px rgba(0,0,0,.35);}}
+  *{box-sizing:border-box;}html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:var(--accent);text-decoration:none;}a:hover{text-decoration:underline;}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 22px 64px;}
+  nav.crumbs{font-size:14px;margin-bottom:26px;color:var(--muted);}
+  nav.crumbs a{font-weight:600;}
+  h1{font-size:32px;letter-spacing:-.02em;line-height:1.2;margin:0 0 10px;}
+  .meta{color:var(--muted);font-size:14px;margin:0 0 26px;}
+  h2{font-size:22px;letter-spacing:-.01em;margin:34px 0 10px;}
+  p,li{font-size:16px;color:var(--ink);}
+  ul,ol{padding-left:22px;}li{margin:6px 0;}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:1px 6px;}
+  .cta{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin:30px 0;}
+  .cta h3{margin:0 0 6px;font-size:18px;}
+  .cta p{margin:0 0 14px;color:var(--muted);font-size:15px;}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:700;font-size:15px;padding:11px 18px;border-radius:10px;}
+  .btn:hover{text-decoration:none;opacity:.92;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;}
+  th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px;border-bottom:2px solid var(--line);}
+  td{padding:8px;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top;}
+  .faq h3{font-size:17px;margin:20px 0 6px;}
+  .faq p{color:var(--muted);margin:0 0 4px;}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"What are UTM parameters?","acceptedAnswer":{"@type":"Answer","text":"UTM parameters are short tags added to the end of a URL (utm_source, utm_medium, utm_campaign, utm_term, utm_content) that tell analytics tools exactly where a visitor came from — which platform, which type of traffic, and which specific campaign."}},
+{"@type":"Question","name":"What is the difference between utm_source and utm_medium?","acceptedAnswer":{"@type":"Answer","text":"utm_source is the specific place the link lives (instagram, newsletter, google). utm_medium is the category of traffic (social, email, cpc). Together they answer 'where exactly?' and 'what kind of channel?'"}},
+{"@type":"Question","name":"Do UTM parameters affect SEO?","acceptedAnswer":{"@type":"Answer","text":"Not when used properly. Use UTMs on links you share externally (posts, emails, ads), not on internal links within your own site — tagging internal links overwrites the visitor's real source in analytics."}},
+{"@type":"Question","name":"Are UTM parameters case-sensitive?","acceptedAnswer":{"@type":"Answer","text":"Yes — analytics tools treat Instagram and instagram as two different sources and will split your data. The simplest fix is a hard rule: everything lowercase, always."}}
+]}
+</script>
+</head>
+<body>
+<div class="wrap">
+<nav class="crumbs"><a href="../../">🛠️ Loomwood Tools</a> <span>› Guides › UTM parameters</span></nav>
+<article>
+<h1>UTM Parameters, Explained Simply</h1>
+<p class="meta">Updated July 2026 · by Loomwood Digital</p>
+
+<p>You post the same link on Instagram, in your newsletter, and in a paid ad. A week later, analytics says you got 400 visits. From where? Without tagging, you'll never know — most of it lumps into "direct" or a vague "social". UTM parameters fix that: they're small tags added to the end of a URL that tell your analytics exactly which post, email, or ad each visitor clicked.</p>
+
+<p>A tagged link looks like this:</p>
+<p><code>https://yoursite.com/sale?utm_source=instagram&amp;utm_medium=social&amp;utm_campaign=spring_sale</code></p>
+
+<div class="cta">
+  <h3>Build tagged links without typos</h3>
+  <p>The free UTM Link Builder assembles and URL-encodes campaign links for you, right in your browser — no signup.</p>
+  <a class="btn" href="../../utm-builder/">Open UTM Link Builder →</a>
+</div>
+
+<h2>The five parameters</h2>
+<table>
+<tr><th>Parameter</th><th>Answers</th><th>Examples</th></tr>
+<tr><td><code>utm_source</code> <em>(required)</em></td><td>Where exactly is the link?</td><td>instagram, newsletter, google, partner-blog</td></tr>
+<tr><td><code>utm_medium</code> <em>(required)</em></td><td>What kind of channel is it?</td><td>social, email, cpc, referral</td></tr>
+<tr><td><code>utm_campaign</code> <em>(required)</em></td><td>Which push/initiative?</td><td>spring_sale, launch_2026, black-friday</td></tr>
+<tr><td><code>utm_term</code></td><td>Which paid keyword?</td><td>running+shoes (mostly for search ads)</td></tr>
+<tr><td><code>utm_content</code></td><td>Which variant/creative?</td><td>hero-button, footer-link, video-ad-b</td></tr>
+</table>
+
+<p>Source vs. medium trips everyone up at first. Think of it this way: <strong>medium is the aisle, source is the shelf.</strong> "Email" is a medium; "newsletter" vs "receipt-footer" are sources. "Social" is a medium; "instagram" vs "pinterest" are sources.</p>
+
+<h2>Naming rules that keep your data clean</h2>
+<ul>
+  <li><strong>Lowercase everything.</strong> Analytics counts <code>Instagram</code> and <code>instagram</code> separately. One casing rule ends that problem forever.</li>
+  <li><strong>No spaces.</strong> Use underscores or dashes (<code>spring_sale</code>), and pick one and stick with it.</li>
+  <li><strong>Be consistent across the team.</strong> If one person writes <code>utm_source=ig</code> and another <code>utm_source=instagram</code>, your Instagram traffic is split in half. Keep a shared list of approved names.</li>
+  <li><strong>Don't tag internal links.</strong> Clicking a UTM-tagged link on your own site restarts the visitor's session with the new source, erasing where they really came from. UTMs are for links that live <em>outside</em> your site.</li>
+</ul>
+
+<h2>Where UTM links pay off</h2>
+<ul>
+  <li><strong>Newsletters:</strong> see which issue and which link position actually drive clicks.</li>
+  <li><strong>Social bios and posts:</strong> separate profile-link traffic from individual posts.</li>
+  <li><strong>Paid ads:</strong> compare creatives with <code>utm_content=ad-a</code> vs <code>ad-b</code>.</li>
+  <li><strong>Collaborations:</strong> give each partner their own <code>utm_source</code> and know exactly what each one sent you.</li>
+</ul>
+
+<h2 class="faq-h">Frequently asked questions</h2>
+<div class="faq">
+  <h3>Do UTM parameters hurt SEO?</h3>
+  <p>Not when used on external/shared links, which is their purpose. Avoid them on internal navigation.</p>
+  <h3>Are they case-sensitive?</h3>
+  <p>Yes. <code>Email</code> and <code>email</code> become two rows in your reports. Go all-lowercase.</p>
+  <h3>Which parameters are required?</h3>
+  <p>Source, medium, and campaign are the working minimum; term and content are optional refinements.</p>
+  <h3>Where do I see the results?</h3>
+  <p>In your analytics tool — e.g. Google Analytics traffic-acquisition reports, broken down by session source/medium and campaign.</p>
+</div>
+
+<div class="cta">
+  <h3>Stop hand-typing campaign URLs</h3>
+  <p>Build them correctly every time — plus save a whole campaign's worth of links and export to CSV with Pro.</p>
+  <a class="btn" href="../../utm-builder/">Open UTM Link Builder →</a>
+</div>
+</article>
+
+<footer>
+More free, private browser tools by Loomwood: <a href="../../invoice-studio/">Invoice generator</a> · <a href="../../image-studio/">Image compressor</a> · <a href="../../signature-studio/">Email signature generator</a> · <a href="../../csv-json/">CSV ⇄ JSON</a> · <a href="../../">All tools</a>
+</footer>
+</div>
+</body>
+</html>
